@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kuis BIPA 1 - Unit 8: Jalan-Jalan</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      min-height: 100vh;
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      color: #2b2d42;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(247, 127, 0, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(214, 40, 40, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 90% 10%, rgba(252, 191, 73, 0.15) 0%, transparent 35%),
+        linear-gradient(135deg, #fff8ee 0%, #ffe8d6 60%, #ffd8b8 100%);
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 850px; width: 100%;
+      background: #fffdf8;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(214, 40, 40, 0.15), 0 5px 15px rgba(0,0,0,0.08);
+      overflow: hidden;
+      margin: 20px 0;
+      border: 3px solid #fff;
+    }
+
+    header {
+      background: linear-gradient(135deg, #d62828 0%, #f77f00 60%, #fcbf49 100%);
+      color: white;
+      padding: 28px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -10%;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -30%; left: -5%;
+      width: 150px; height: 150px;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    header h1 { font-size: 1.9rem; margin-bottom: 4px; letter-spacing: 0.5px; position: relative; text-shadow: 2px 2px 0 rgba(0,0,0,0.15); }
+    header p { opacity: 0.95; font-size: 0.95rem; position: relative; }
+
+    nav {
+      display: flex;
+      background: #2b2d42;
+      position: sticky; top: 0; z-index: 10;
+    }
+    nav button {
+      flex: 1;
+      padding: 18px 10px;
+      border: none;
+      background: transparent;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.25s;
+      color: #f8edeb;
+      touch-action: manipulation;
+      min-height: 56px;
+      -webkit-appearance: none;
+      letter-spacing: 0.3px;
+    }
+    nav button.active {
+      background: linear-gradient(135deg, #f77f00, #fcbf49);
+      color: #2b2d42;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+    }
+    nav button:active { background: #f77f00; color: white; }
+
+    .content { padding: 26px 22px; }
+    .tab { display: none; }
+    .tab.active { display: block; animation: fadeIn 0.35s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to {opacity:1;transform:translateY(0);} }
+
+    .section-title {
+      display: inline-block;
+      background: linear-gradient(135deg, #d62828, #f77f00);
+      color: white;
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 8px 0 16px;
+      box-shadow: 4px 4px 0 #fcbf49;
+      letter-spacing: 0.3px;
+    }
+
+    .role-play {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin: 20px 0;
+    }
+    .role-card {
+      padding: 18px;
+      border-radius: 18px;
+      position: relative;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      border: 3px solid white;
+    }
+    .role-turis {
+      background: linear-gradient(135deg, #a8dadc 0%, #e0fbfc 100%);
+      border-color: #457b9d;
+    }
+    .role-warga {
+      background: linear-gradient(135deg, #ffe0b2 0%, #ffedd5 100%);
+      border-color: #f77f00;
+    }
+    .role-icon {
+      font-size: 2.5rem;
+      display: block;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .role-title {
+      font-weight: 800;
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 10px;
+      color: #2b2d42;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .role-bubble {
+      background: white;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #2b2d42;
+      position: relative;
+      margin-bottom: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      border-left: 4px solid #457b9d;
+    }
+    .role-warga .role-bubble { border-left-color: #f77f00; }
+    .role-bubble:last-child { margin-bottom: 0; }
+    .role-bubble em { color: #6a4c93; font-style: normal; font-weight: 600; }
+
+    @media (max-width: 600px) {
+      .role-play { grid-template-columns: 1fr; }
+    }
+
+    .kosakata-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 16px 0 24px;
+    }
+    .kosakata-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+      border: 3px solid #fff;
+      transition: transform 0.2s;
+      text-align: center;
+    }
+    .kosakata-card:hover { transform: translateY(-4px); }
+    .kosakata-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: repeating-linear-gradient(45deg, #fff3e2, #fff3e2 8px, #ffe0b2 8px, #ffe0b2 16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 2.2rem;
+      color: #d62828;
+    }
+    .kosakata-img img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .kosakata-word {
+      padding: 10px 8px;
+      font-weight: 700;
+      color: #2b2d42;
+      font-size: 0.95rem;
+      background: linear-gradient(135deg, #fcbf49, #f77f00);
+    }
+    .kosakata-def {
+      padding: 6px 8px 10px;
+      font-size: 0.78rem;
+      color: #495057;
+      line-height: 1.35;
+    }
+    @media (max-width: 700px) {
+      .kosakata-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .hero-photo-wrap {
+      margin: 22px 0;
+      display: flex;
+      justify-content: center;
+    }
+    .hero-photo {
+      width: 100%;
+      max-width: 700px;
+      background: #fff3e2;
+      border: 6px solid #fff;
+      border-radius: 20px;
+      box-shadow:
+        0 0 0 3px #d62828,
+        12px 12px 0 #fcbf49,
+        12px 12px 0 3px #d62828,
+        0 20px 40px rgba(0,0,0,0.15);
+      transform: rotate(-1.5deg);
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .hero-photo:hover { transform: rotate(0deg) scale(1.01); }
+    .hero-photo img {
+      width: 100%;
+      display: block;
+      min-height: 220px;
+      object-fit: cover;
+    }
+    .hero-placeholder {
+      padding: 50px 20px;
+      text-align: center;
+      color: #d62828;
+      font-weight: 700;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      background: repeating-linear-gradient(45deg, #fff3e2, #fff3e2 12px, #ffe0b2 12px, #ffe0b2 24px);
+    }
+    .hero-placeholder small {
+      display: block; margin-top: 8px;
+      font-weight: 400; font-size: 0.85rem; color: #6c757d;
+    }
+    .hero-caption {
+      background: linear-gradient(135deg, #d62828, #f77f00);
+      color: white;
+      padding: 10px 14px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .info-card {
+      background: white;
+      padding: 16px;
+      border-radius: 16px;
+      border-left: 5px solid #f77f00;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    .info-card h3 {
+      color: #d62828; font-size: 1rem;
+      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .info-card ul { padding-left: 20px; margin: 4px 0; }
+    .info-card li { line-height: 1.55; font-size: 0.9rem; color: #2b2d42; }
+    .info-card.full { grid-column: 1 / -1; border-left-color: #457b9d; }
+    .info-card.full h3 { color: #457b9d; }
+
+    @media (max-width: 600px) {
+      .info-grid { grid-template-columns: 1fr; }
+    }
+
+    .box {
+      background: linear-gradient(135deg, #fff9f0, #fff3e2);
+      border-left: 5px solid #d62828;
+      padding: 14px 16px;
+      margin: 12px 0;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+    .box strong { color: #d62828; }
+    .box em { color: #457b9d; font-style: normal; font-weight: 600; }
+
+    .kuis-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+    .skor {
+      font-weight: 800;
+      background: linear-gradient(135deg, #f77f00, #fcbf49);
+      color: #2b2d42;
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 1rem;
+      box-shadow: 3px 3px 0 #d62828;
+    }
+    #nomorSoal {
+      font-weight: 700; color: #d62828;
+      background: #fff3e2;
+      padding: 6px 14px; border-radius: 30px;
+      font-size: 0.9rem;
+    }
+    .soal {
+      background: linear-gradient(135deg, #ffffff, #fff9f0);
+      padding: 20px;
+      border-radius: 18px;
+      margin-bottom: 20px;
+      border: 3px solid #fff;
+      box-shadow: 0 8px 20px rgba(214, 40, 40, 0.08);
+    }
+
+    /* FOTO SOAL - DI ATAS PERTANYAAN, DI TENGAH */
+    .soal-img {
+      margin: 0 0 20px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .soal-img img {
+      max-width: 85%;
+      max-height: 320px;
+      border-radius: 14px;
+      border: 4px solid white;
+      box-shadow: 6px 6px 0 #fcbf49, 6px 6px 0 3px #d62828;
+      display: block;
+      margin: 0 auto;
+    }
+    .soal-img-placeholder {
+      padding: 30px 16px;
+      background: repeating-linear-gradient(45deg, #fff3e2, #fff3e2 10px, #ffe0b2 10px, #ffe0b2 20px);
+      border-radius: 14px;
+      color: #d62828;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border: 3px dashed #f77f00;
+      text-align: center;
+      max-width: 85%;
+    }
+    .soal-img-placeholder small { display:block; margin-top:6px; font-weight:400; color:#6c757d; font-size:0.8rem; }
+
+    .soal p {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: #2b2d42;
+      line-height: 1.5;
+    }
+
+    .opsi { display: flex; flex-direction: column; gap: 10px; }
+    .opsi button {
+      padding: 15px 18px;
+      border: 2px solid #ffe0b2;
+      background: white;
+      border-radius: 14px;
+      font-size: 1rem;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #2b2d42;
+      touch-action: manipulation;
+      min-height: 52px;
+      font-weight: 500;
+    }
+    .opsi button:hover:not(:disabled) {
+      background: #fff3e2;
+      border-color: #f77f00;
+      transform: translateX(4px);
+    }
+    .opsi button:disabled { cursor: default; opacity: 0.95; }
+    .opsi button.benar {
+      background: linear-gradient(135deg, #d4edda, #c3e6cb);
+      border-color: #28a745;
+      color: #155724;
+      font-weight: 700;
+    }
+    .opsi button.salah {
+      background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+      border-color: #dc3545;
+      color: #721c24;
+    }
+    .feedback { margin-top: 14px; font-weight: 700; min-height: 24px; font-size: 1rem; }
+    .feedback.benar { color: #28a745; }
+    .feedback.salah { color: #dc3545; }
+
+    .btn {
+      padding: 14px 26px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+      background: linear-gradient(135deg, #d62828, #f77f00);
+      color: white;
+      touch-action: manipulation;
+      min-height: 50px;
+      box-shadow: 4px 4px 0 #fcbf49;
+      letter-spacing: 0.5px;
+    }
+    .btn:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #fcbf49; }
+    .btn:disabled { background: #adb5bd; cursor: not-allowed; box-shadow: 4px 4px 0 #ced4da; }
+
+    .progress { height: 10px; background: #ffe0b2; border-radius: 5px; margin-bottom: 20px; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #f77f00, #fcbf49);
+      width: 0%;
+      transition: width 0.4s ease;
+      border-radius: 5px;
+    }
+
+    .hasil {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #fff9f0, #ffe8d6);
+      border-radius: 20px;
+      border: 3px solid #fff;
+      box-shadow: 0 10px 24px rgba(214,40,40,0.1);
+    }
+    .hasil h2 { color: #d62828; font-size: 2rem; margin-bottom: 8px; }
+    .hasil .skor-besar {
+      font-size: 4rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #d62828, #f77f00, #fcbf49);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 10px 0;
+    }
+    .hasil p { font-size: 1.1rem; margin-bottom: 20px; color: #495057; font-weight: 500; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🇮🇩 BIPA 1 · Unit 8</h1>
+    <p>Jalan-Jalan: Arah, Lokasi & Wisata Jakarta</p>
+  </header>
+
+  <nav id="navTabs">
+    <button type="button" id="btnMateri" class="active" data-tab="materi">📖 Materi</button>
+    <button type="button" id="btnKuis" data-tab="kuis">📝 Kuis</button>
+  </nav>
+
+  <!-- ================= MATERI ================= -->
+  <div id="materi" class="content tab active">
+    <div class="materi">
+
+      <div class="section-title">🎯 Kegiatan 1 · Menanyakan & Menunjukkan Arah</div>
+
+      <p style="margin-bottom:12px; color:#495057; line-height:1.6;">
+        Perhatikan percakapan antara seorang <strong style="color:#457b9d;">turis</strong> yang bertanya arah dan seorang <strong style="color:#d62828;">warga setempat</strong> yang memberikan informasi.
+      </p>
+
+      <div class="role-play">
+        <div class="role-card role-turis">
+          <span class="role-icon">🧑‍✈️</span>
+          <div class="role-title">Turis</div>
+          <div class="role-bubble">"Permisi, Pak. <em>Museum Nasional di mana, ya?</em>"</div>
+          <div class="role-bubble">"<em>Lewat mana, ya, Pak?</em>"</div>
+          <div class="role-bubble">"Baik. <em>Terima kasih, ya, Pak.</em>"</div>
+        </div>
+
+        <div class="role-card role-warga">
+          <span class="role-icon">🧑</span>
+          <div class="role-title">Warga Setempat</div>
+          <div class="role-bubble">"Oh, Museum Nasional ada di <em>Jalan Medan Merdeka Barat</em>."</div>
+          <div class="role-bubble">"Ibu <em>jalan lurus saja</em> ke Jalan Medan Merdeka Barat sampai pertigaan. Dari sana Ibu <em>belok kanan</em>."</div>
+        </div>
+      </div>
+
+      <div class="box">
+        <strong>💡 Ungkapan Bertanya Lokasi:</strong><br>
+        • "Museum Nasional di mana, ya, Pak?"<br>
+        • "Lewat mana, ya, Pak?"<br>
+        • "Ke Monas bagaimana, ya?"<br>
+        • "Permisi, numpang tanya."
+      </div>
+
+      <div class="box" style="border-left-color:#457b9d;">
+        <strong style="color:#457b9d;">💬 Ungkapan Memberi Arah:</strong><br>
+        • "Museum Nasional ada di Jalan Medan Merdeka Barat."<br>
+        • "Ibu jalan lurus saja sampai pertigaan."<br>
+        • "Dari sana Ibu belok kanan."<br>
+        • <em>Belok kiri</em> · <em>Belok kanan</em> · <em>Lurus</em> · <em>Putaran</em> · <em>Perempatan</em>.
+      </div>
+
+      <h3 style="color:#d62828; margin-top:24px; font-size:1.05rem; margin-bottom:4px;">🖼️ Kosakata Penting</h3>
+      <p style="font-size:0.85rem; color:#6c757d; margin-bottom:12px;">Gambar-gambar berikut akan membantu Anda memahami arah.</p>
+
+      <div class="kosakata-grid">
+        <div class="kosakata-card">
+          <div class="kosakata-img">
+            <img src="pertigaan.jpg" alt="Pertigaan"
+                 onerror="this.style.display='none'; this.parentNode.innerHTML='🔀';">
+          </div>
+          <div class="kosakata-word">Pertigaan</div>
+          <div class="kosakata-def">Persimpangan tiga jalan</div>
+        </div>
+
+        <div class="kosakata-card">
+          <div class="kosakata-img">
+            <img src="perempatan.jpg" alt="Perempatan"
+                 onerror="this.style.display='none'; this.parentNode.innerHTML='✖️';">
+          </div>
+          <div class="kosakata-word">Perempatan</div>
+          <div class="kosakata-def">Persimpangan empat jalan</div>
+        </div>
+
+        <div class="kosakata-card">
+          <div class="kosakata-img">
+            <img src="putaran.jpg" alt="Putaran"
+                 onerror="this.style.display='none'; this.parentNode.innerHTML='🔄';">
+          </div>
+          <div class="kosakata-word">Putaran</div>
+          <div class="kosakata-def">Tempat memutar arah kendaraan</div>
+        </div>
+
+        <div class="kosakata-card">
+          <div class="kosakata-img">
+            <img src="lurus.jpg" alt="Lurus"
+                 onerror="this.style.display='none'; this.parentNode.innerHTML='⬆️';">
+          </div>
+          <div class="kosakata-word">Lurus</div>
+          <div class="kosakata-def">Tidak belok</div>
+        </div>
+      </div>
+
+      <div class="section-title" style="margin-top:28px;">🚌 Kegiatan 5 · Jalan-Jalan Bersama Mpok Siti</div>
+
+      <div class="hero-photo-wrap">
+        <div class="hero-photo">
+          <img src="mpok-siti.jpg" alt="Infografik Bus Mpok Siti"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <div class="hero-placeholder" style="display:none;">
+            🗺️ Taruh foto infografik/peta di sini<br>
+            <small>Ganti <b>mpok-siti.jpg</b> dengan nama file foto Anda</small>
+          </div>
+          <div class="hero-caption">✨ BUS MPOK SITI · CITY TOUR JAKARTA ✨</div>
+        </div>
+      </div>
+
+      <p style="line-height:1.7; margin: 16px 0; background: #fff3e2; padding: 14px; border-radius: 12px; border-left: 5px solid #f77f00;">
+        <strong style="color:#d62828;">Mpok Siti</strong> adalah sebutan untuk <strong>Bus City Tour Jakarta</strong> yang dikelola oleh Pemerintah DKI Jakarta. Bus ini melewati tempat-tempat ikonik di Jakarta.
+      </p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>🗺️ Rute Bus</h3>
+          <ul>
+            <li>Monas 1 &amp; Monas 2</li>
+            <li>Balai Kota</li>
+            <li>Sarinah</li>
+            <li>Bundaran HI</li>
+            <li>Masjid Istiqlal</li>
+            <li>Pasar Baru</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3>🕐 Jam Operasional</h3>
+          <ul>
+            <li><strong>Senin–Sabtu:</strong> 09.00–19.00</li>
+            <li><strong>Minggu:</strong> 12.00–19.00</li>
+          </ul>
+          <h3 style="margin-top:12px;">✨ Fasilitas Bus</h3>
+          <ul>
+            <li>Tempat khusus penyandang cacat</li>
+            <li>Pengeras suara</li>
+            <li>Pendingin ruangan (AC)</li>
+            <li>Televisi</li>
+          </ul>
+        </div>
+        <div class="info-card full">
+          <h3>📌 Catatan</h3>
+          <p style="font-size:0.9rem; line-height:1.6; color:#495057;">Bus ini berhenti di halte dengan <strong>tanda khusus</strong>. Pastikan Anda menunggu di halte yang bertanda Bus City Tour Jakarta.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= KUIS ================= -->
+  <div id="kuis" class="content tab">
+    <div class="kuis-header">
+      <span class="skor">🏆 Skor: <span id="skorTampil">0</span></span>
+      <span id="nomorSoal">Soal 1 / 10</span>
+    </div>
+    <div class="progress">
+      <div id="progressBar" class="progress-bar" style="width: 0%;"></div>
+    </div>
+    <div id="kuisArea">
+      <div class="soal">
+        <div id="gambarSoal" class="soal-img" style="display:none;">
+          <img id="gambarSoalImg" src="" alt="Peta"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <div class="soal-img-placeholder" style="display:none;">
+            🗺️ Taruh foto peta di sini<br>
+            <small>Ganti <b>peta-museum.jpg</b> dengan nama file foto Anda</small>
+          </div>
+        </div>
+        <p id="pertanyaan">Memuat soal...</p>
+        <div id="opsiContainer" class="opsi"></div>
+        <div id="feedback" class="feedback"></div>
+      </div>
+      <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button id="btnNext" class="btn" disabled>Selanjutnya →</button>
+      </div>
+    </div>
+    <div id="hasilArea" class="hasil" style="display: none;">
+      <h2>🎉 Selesai!</h2>
+      <div class="skor-besar" id="skorAkhir">0</div>
+      <p id="pesanAkhir"></p>
+      <button class="btn" id="btnUlang">🔄 Ulangi Kuis</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ========== DATA SOAL ==========
+  const soalList = [
+    { pertanyaan: "Museum Nasional berada di Jalan ...", opsi: ["Medan Merdeka Barat", "Jalan Museum", "Jalan Kramat", "Jalan Thamrin"], jawaban: 0 },
+    { pertanyaan: "Dari Jalan Museum, jika ingin ke Museum Nasional, kita jalan lurus sampai pertigaan lalu ...", opsi: ["belok kiri", "belok kanan", "putar balik", "lurus terus"], jawaban: 1 },
+    { pertanyaan: "Ungkapan \"Permisi, numpang tanya\" digunakan untuk ...", opsi: ["menyapa", "berpamitan", "bertanya", "meminta maaf"], jawaban: 2 },
+    {
+      pertanyaan: "Pada peta di atas, posisi Museum Nasional ditunjukkan oleh huruf ...",
+      gambar: "peta-museum.jpg",
+      opsi: ["A", "B", "C", "D"],
+      jawaban: 1
+    },
+    { pertanyaan: "Bus City Tour Jakarta memiliki nama sebutan ...", opsi: ["Mpok Siti", "Bang Joni", "Ondel-ondel", "Jak Lingko"], jawaban: 0 },
+    { pertanyaan: "Jam operasional Bus Mpok Siti pada hari Senin–Sabtu adalah ...", opsi: ["08.00–17.00", "09.00–19.00", "10.00–20.00", "07.00–15.00"], jawaban: 1 },
+    { pertanyaan: "Fasilitas yang TIDAK ada di Bus Mpok Siti adalah ...", opsi: ["Pendingin ruangan", "Televisi", "Pengeras suara", "Kolam renang"], jawaban: 3 },
+    { pertanyaan: "Rute Bus Mpok Siti melewati tempat-tempat berikut, kecuali ...", opsi: ["Monas", "Balai Kota", "Sarinah", "Ancol"], jawaban: 3 },
+    { pertanyaan: "\"Belok kiri\" artinya ...", opsi: ["berputar ke kiri", "jalan ke arah kiri", "berhenti di kiri", "lurus ke kiri"], jawaban: 1 },
+    { pertanyaan: "Kata \"sana\" dalam \"Suvenir ada di sebelah sana\" menunjuk tempat yang ...", opsi: ["dekat", "jauh", "tinggi", "rendah"], jawaban: 1 }
+  ];
+
+  let indeksSoal = 0;
+  let skor = 0;
+  let sudahJawab = false;
+
+  const pertanyaanEl = document.getElementById('pertanyaan');
+  const opsiContainer = document.getElementById('opsiContainer');
+  const feedbackEl = document.getElementById('feedback');
+  const btnNext = document.getElementById('btnNext');
+  const skorTampil = document.getElementById('skorTampil');
+  const nomorSoal = document.getElementById('nomorSoal');
+  const progressBar = document.getElementById('progressBar');
+  const kuisArea = document.getElementById('kuisArea');
+  const hasilArea = document.getElementById('hasilArea');
+  const skorAkhir = document.getElementById('skorAkhir');
+  const pesanAkhir = document.getElementById('pesanAkhir');
+  const gambarSoal = document.getElementById('gambarSoal');
+  const gambarSoalImg = document.getElementById('gambarSoalImg');
+
+  // ========== TAB SWITCHING — pakai click saja (paling stabil) ==========
+  document.querySelectorAll('#navTabs button').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const namaTab = this.getAttribute('data-tab');
+      pindahTab(namaTab);
+    });
+  });
+
+  function pindahTab(namaTab) {
+    document.querySelectorAll('.tab').forEach(function(el) {
+      el.classList.remove('active');
+    });
+    document.querySelectorAll('#navTabs button').forEach(function(btn) {
+      btn.classList.remove('active');
+    });
+
+    const tabTarget = document.getElementById(namaTab);
+    if (tabTarget) tabTarget.classList.add('active');
+
+    const btnTarget = document.querySelector('#navTabs button[data-tab="' + namaTab + '"]');
+    if (btnTarget) btnTarget.classList.add('active');
+
+    if (namaTab === 'kuis' && indeksSoal === 0 && skor === 0 && !sudahJawab) {
+      tampilkanSoal();
+    }
+  }
+
+  // ========== LOGIKA KUIS ==========
+  function tampilkanSoal() {
+    if (indeksSoal >= soalList.length) { tampilkanHasil(); return; }
+    sudahJawab = false;
+    btnNext.disabled = true;
+    feedbackEl.textContent = '';
+    feedbackEl.className = 'feedback';
+
+    const soal = soalList[indeksSoal];
+    pertanyaanEl.textContent = soal.pertanyaan;
+
+    if (soal.gambar) {
+      gambarSoal.style.display = 'flex';
+      gambarSoalImg.style.display = 'block';
+      gambarSoalImg.src = soal.gambar;
+      const ph = gambarSoal.querySelector('.soal-img-placeholder');
+      if (ph) ph.style.display = 'none';
+    } else {
+      gambarSoal.style.display = 'none';
+    }
+
+    opsiContainer.innerHTML = '';
+    soal.opsi.forEach(function(teks, i) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = teks;
+      btn.onclick = function() { pilihJawaban(i, btn); };
+      opsiContainer.appendChild(btn);
+    });
+
+    nomorSoal.textContent = 'Soal ' + (indeksSoal + 1) + ' / ' + soalList.length;
+    skorTampil.textContent = skor;
+    progressBar.style.width = ((indeksSoal / soalList.length) * 100) + '%';
+  }
+
+  function pilihJawaban(indeksPilih, btn) {
+    if (sudahJawab) return;
+    sudahJawab = true;
+    const soal = soalList[indeksSoal];
+    const semuaBtn = opsiContainer.querySelectorAll('button');
+    semuaBtn.forEach(function(b, i) {
+      b.disabled = true;
+      if (i === soal.jawaban) b.classList.add('benar');
+      else if (i === indeksPilih) b.classList.add('salah');
+    });
+    if (indeksPilih === soal.jawaban) {
+      skor += 10;
+      feedbackEl.textContent = '✅ Benar!';
+      feedbackEl.className = 'feedback benar';
+    } else {
+      feedbackEl.textContent = '❌ Salah. Jawaban yang benar: ' + soal.opsi[soal.jawaban];
+      feedbackEl.className = 'feedback salah';
+    }
+    skorTampil.textContent = skor;
+    btnNext.disabled = false;
+    progressBar.style.width = (((indeksSoal + 1) / soalList.length) * 100) + '%';
+  }
+
+  function nextSoal() {
+    indeksSoal++;
+    if (indeksSoal < soalList.length) tampilkanSoal();
+    else tampilkanHasil();
+  }
+
+  function tampilkanHasil() {
+    kuisArea.style.display = 'none';
+    hasilArea.style.display = 'block';
+    const total = soalList.length * 10;
+    skorAkhir.textContent = skor + ' / ' + total;
+    if (skor === total) pesanAkhir.textContent = 'Luar biasa! Semua jawaban benar! 🏆';
+    else if (skor >= total * 0.7) pesanAkhir.textContent = 'Bagus sekali! Pertahankan! 👍';
+    else pesanAkhir.textContent = 'Jangan menyerah, pelajari materi lagi ya! 💪';
+  }
+
+  function ulangKuis() {
+    indeksSoal = 0; skor = 0; sudahJawab = false;
+    skorTampil.textContent = 0;
+    kuisArea.style.display = 'block';
+    hasilArea.style.display = 'none';
+    tampilkanSoal();
+    progressBar.style.width = '0%';
+  }
+
+  btnNext.addEventListener('click', nextSoal);
+  document.getElementById('btnUlang').addEventListener('click', ulangKuis);
+
+  tampilkanSoal();
+</script>
+</body>
+</html>
